@@ -1,0 +1,7 @@
+<h1>Minify URL</h1>
+
+<form method="post" action="{% url 'url_new' %}">
+    {% csrf_token %}
+    {{ urlForm.as_p }}
+    <input type="submit"/>
+</form>

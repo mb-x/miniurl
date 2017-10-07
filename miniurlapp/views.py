@@ -1,8 +1,16 @@
 from django.shortcuts import render, redirect, get_object_or_404
+from django.views.generic import ListView
 from .models import MiniURL
 from .forms import MiniURLForm
+from .models import Article
 
 # Create your views here.
+
+class ListArticles(ListView):
+    model = Article
+    context_object_name = "articles"
+    template_name = "blog/accueil.html"
+    paginate_by=5
 
 def list(request):
     """ list of minified links """

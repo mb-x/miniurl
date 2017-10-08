@@ -102,3 +102,32 @@ class Contact(models.Model):
     
     def __str__(self):
            return self.nom
+
+class Eleve(models.Model):
+    nom = models.CharField(max_length=31)
+    moyenne = models.IntegerField(default=10)
+
+    def __str__(self):
+        return "Élève {0} ({1}/20 de moyenne)".format(self.nom, self.moyenne)
+
+class Cours(models.Model):
+    nom = models.CharField(max_length=31)
+    eleves = models.ManyToManyField(Eleve)
+
+    def __str__(self):
+        return self.nom
+
+class Document(models.Model):
+    titre = models.CharField(max_length=255)
+    date_ajout = models.DateTimeField(auto_now_add=True, 
+                                      verbose_name="Date d'ajout du document")
+    auteur = models.CharField(max_length=255, null=True, blank=True)
+    
+    class Meta:
+        abstract = True
+    
+class Article(Document):
+    contenu = models.TextField()  
+    
+class Image(Document):
+    image = models.ImageField(upload_to="images")

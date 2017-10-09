@@ -11,3 +11,17 @@
     <li>No URL found.</li>
     {% endfor %}
 </ul>
+
+<div class="pagination">
+    {% if urls.has_previous %}
+        <a href="{% url 'url_liste' %}?page={{urls.previous_page_number}}">Précédente</a> -
+    {% endif %}
+ 
+    <span class="current">
+        Page {{ urls.number }} sur {{ urls.paginator.num_pages }}
+    </span>
+ 
+    {% if urls.has_next %}
+        - <a href="{% url 'url_liste'  %}?page={{urls.next_page_number}}">Suivante</a>
+    {% endif %}
+ </div>

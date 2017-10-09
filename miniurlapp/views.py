@@ -3,6 +3,7 @@ from django.views.generic import ListView
 from .models import MiniURL
 from .forms import MiniURLForm
 from .models import Article, Eleve
+from django.core.paginator import Paginator, EmptyPage
 
 # Create your views here.
 
@@ -19,7 +20,14 @@ class ListArticles(ListView):
 
 def list(request):
     """ list of minified links """
-    urls = MiniURL.objects.order_by("-nb_access")
+    urls_list = MiniURL.objects.order_by("-nb_access")
+    page = request.GET.get('page', 1)
+    paginator = Paginator(urls_list, 1)
+    try:
+        urls = paginator.page(page)
+    except:
+        urls = paginator.page(paginator.num_pages)
+
     return render(request, 'list.html', locals())
 
 def new(request):

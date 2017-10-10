@@ -4,6 +4,7 @@ from .models import MiniURL
 from .forms import MiniURLForm
 from .models import Article, Eleve
 from django.core.paginator import Paginator, EmptyPage
+from django.utils.translation import ungettext, ugettext as _
 
 # Create your views here.
 
@@ -44,3 +45,14 @@ def forword(request, code):
     url.nb_access += 1
     url.save()
     return redirect(url.url, permanent=True)
+
+def test_i18n(request):
+    nb_chats = 2
+    couleur = "blanc"
+    chaine = _("J'ai un %(animal)s %(col)s.") % {'animal': 'chat', 'col': couleur}
+    infos = ungettext(
+        "… et selon mes informations, vous avez %(nb)s chat %(col)s !",
+        "… et selon mes informations, vous avez %(nb)s chats %(col)ss !",
+        nb_chats) % {'nb': nb_chats, 'col': couleur}
+
+    return render(request, 'test_i18n.html', locals())

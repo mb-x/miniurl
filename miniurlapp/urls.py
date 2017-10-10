@@ -11,4 +11,6 @@ urlpatterns = [
     url(r'^faq', TemplateView.as_view(template_name='blog/faq.html')),
     
     url(r'^blog$', views.ListArticles.as_view(), name="blog_liste"), 
+
+    url(r'^i18n$', views.test_i18n, name="test_i18n"), 
 ]
